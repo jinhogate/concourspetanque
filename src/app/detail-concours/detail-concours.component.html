@@ -1,0 +1,175 @@
+<div class="container-fluid">
+  <div class="row">
+    <p class="text-center mt-2 fw-bold text-decoration-underline">Détails du concours {{concours.libelleConcours}}</p>
+    <div class="col-lg-6">
+      <div class="card m-1 w-100">
+        <img
+          class="card-img-top"
+          [src]="concours.imageConcours"
+          alt="Card image"
+          style="width: 100%"
+        />
+        <div class="card-body">
+          <h4 class="card-title">
+            <span class="text-decoration-underline">{{
+              concours.libelleConcours
+            }}</span>
+            <br />
+            <span
+              [ngClass]="{
+                badge: true,
+                'bg-success':
+                  concours.categorieConcours.libelleCategorie === 'SAUVAGE',
+                'bg-danger ':
+                  concours.categorieConcours.libelleCategorie === 'LICENCIE'
+              }"
+              >{{ concours.categorieConcours.libelleCategorie }}</span
+            >
+          </h4>
+          <p class="card-text"></p>
+          <h5 class="text-uppercase">Adresse :</h5>
+          <h6 class="fw-bold text-danger">
+            {{ concours.addressConcours.numRue }}
+            {{ concours.addressConcours.nameRue }}
+            {{ concours.addressConcours.city }},
+            {{ concours.addressConcours.codePostal }}
+            {{ concours.addressConcours.country }}, ({{
+              concours.addressConcours.lieuDit
+            }})
+          </h6>
+          <br />
+          <h5 class="text-uppercase">Date :</h5>
+          <h6 class="fw-bold text-danger">
+            {{ concours.concoursDate | date : "medium" }}
+          </h6>
+          <br />
+          <div class="p-2">
+            <a class="btn btn-success m-2">Réserver</a>
+            <a class="btn btn-danger m-2" routerLink="/concours" >Retour</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="m-1" id="accordion">
+        <div class="card">
+          <div class="card-header">
+            <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
+              Informations principales
+            </a>
+          </div>
+          <div
+            id="collapseOne"
+            class="collapse show"
+            data-bs-parent="#accordion"
+          >
+            <div class="card-body">
+              <p
+                class="fw-bold"
+                *ngIf="
+                  concours.categorieConcours.libelleCategorie === 'LICENCIE'
+                "
+              >
+                Ce concours est réservé uniquement aux Licenciés.
+              </p>
+              <p
+                class="fw-bold"
+                *ngIf="
+                  concours.categorieConcours.libelleCategorie === 'SAUVAGE'
+                "
+              >
+                Ce concours est ouvert à Tous.
+              </p>
+              <p>
+                Elle aura lieu le
+                <span class="text-primary">{{
+                  concours.concoursDate | date : "medium"
+                }}</span>
+              </p>
+              <p>
+                Plus précisément à l'adresse suivante :
+                <span class="fw-bold">
+                  {{ concours.addressConcours.numRue }}
+                  {{ concours.addressConcours.nameRue }}
+                  {{ concours.addressConcours.city }},
+                  {{ concours.addressConcours.codePostal }}
+                  {{ concours.addressConcours.country }}, ({{
+                    concours.addressConcours.lieuDit
+                  }})
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <a
+              class="collapsed btn"
+              data-bs-toggle="collapse"
+              href="#collapseTwo"
+            >
+              Informations secondaires
+            </a>
+          </div>
+          <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+            <div class="card-body">
+              <div class="p-2" *ngIf="concours.typeConcours.length > 0">
+                <span class="fw-bold"
+                  >Voici les différents types de concours qu'il y'aura :</span
+                >
+                <div
+                  class="p-1"
+                  *ngFor="let typeConcours of concours.typeConcours"
+                >
+                  <ul class="list-group border border-2">
+                    <li class="list-group-item active">
+                      {{ typeConcours.libelleTypeConcours }}
+                    </li>
+                    <li class="list-group-item text-success">
+                      lot à gagner : {{ typeConcours.lot }}
+                    </li>
+                    <li class="list-group-item">
+                      {{ typeConcours.mise | currency : "EUR" }} par personne
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <a
+              class="collapsed btn"
+              data-bs-toggle="collapse"
+              href="#collapseThree"
+            >
+              Contacts
+            </a>
+          </div>
+          <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+            <div class="card-body fw-bold">
+              <p>Ce concours est organisé par :</p>
+              <div>
+                <p>
+                  {{ concours.organisateur.lastNamePerson }} -
+                  {{ concours.organisateur.firstNamePerson }}
+                </p>
+                <p>Email : {{ concours.organisateur.emailPerson }}</p>
+                <p class="text-danger">
+                  Téléphone pour réservation :
+                  {{ concours.organisateur.telPerson }}
+                </p>
+              </div>
+              <div *ngIf="concours.club">
+                <p class="text-info">
+                  Le club organisateur est : {{ concours.club.nameClub }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

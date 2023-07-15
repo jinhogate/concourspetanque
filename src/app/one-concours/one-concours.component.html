@@ -1,0 +1,44 @@
+<div class="card" style="width: 400px">
+  <img
+    class="card-img-top"
+    [src]="itemConcours.imageConcours"
+    alt="Card image"
+    style="width: 100%"
+  />
+  <div class="card-body">
+    <h4 class="card-title">
+      <span class="text-decoration-underline">{{
+        itemConcours.libelleConcours
+      }}</span>
+      <br />
+      <span
+        [ngClass]="{
+          badge: true,
+          'bg-success':
+            itemConcours.categorieConcours.libelleCategorie === 'SAUVAGE',
+          'bg-danger ':
+            itemConcours.categorieConcours.libelleCategorie === 'LICENCIE'
+        }"
+        >{{ itemConcours.categorieConcours.libelleCategorie }}</span
+      >
+    </h4>
+    <p class="card-text"></p>
+    <h5 class="text-uppercase">Adresse :</h5>
+    <h6 class="fw-bold text-danger">
+      {{ itemConcours.addressConcours.numRue }}
+      {{ itemConcours.addressConcours.nameRue }}
+      {{ itemConcours.addressConcours.city }},
+      {{ itemConcours.addressConcours.codePostal }}
+      {{ itemConcours.addressConcours.country }}, ({{
+        itemConcours.addressConcours.lieuDit
+      }})
+    </h6>
+    <br />
+    <h5 class="text-uppercase">Date :</h5>
+    <h6 class="fw-bold text-danger">
+      {{ itemConcours.concoursDate | date : "medium" }}
+    </h6>
+    <br />
+    <a (click)="onViewConcours()" class="btn btn-primary">Voir détails</a>
+  </div>
+</div>
